@@ -1,0 +1,13 @@
+@import helper._
+
+@(listForm: Form[ListForm.Data])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+
+@main("List Sorter") {
+  <h1>List Sorter</h1>
+
+  @form(action = helper.CSRF(routes.HomeController.sortList())) {
+    @inputText(listForm("listToSort"))
+
+    <input type="submit" value="Obligame">
+  }
+}
