@@ -14,5 +14,6 @@ class SortActor extends Actor {
   override def receive: Receive = {
     case SortList(listToSort) =>
       sender() ! ListSorted(listToSort.sorted)
+      context.stop(self)
   }
 }
