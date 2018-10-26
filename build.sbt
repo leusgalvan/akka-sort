@@ -7,7 +7,21 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.12.6"
 
-wartremoverErrors in (Compile, compile) ++= Warts.all
+wartremoverErrors in (Compile, compile) ++= Warts.allBut(
+  Wart.Any,
+  Wart.DefaultArguments,
+  Wart.OptionPartial,
+  Wart.PublicInference,
+  Wart.FinalCaseClass,
+  Wart.NonUnitStatements,
+  Wart.AsInstanceOf,
+  Wart.Nothing,
+  Wart.Overloading,
+  Wart.Product,
+  Wart.Serializable,
+  Wart.Var,
+  Wart.ImplicitParameter
+)
 
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
