@@ -25,8 +25,11 @@ class SortActor extends Actor {
       case(Nil, _) => acc ++ rs
       case(_, Nil) => acc ++ ls
       case(left :: ls1, right :: rs1) =>
-        if (left < right) merge(ls1, rs, acc:+left)
-        else merge(ls, rs1, acc:+right)
+        if (left < right) {
+          merge(ls1, rs, acc:+left)
+        } else {
+          merge(ls, rs1, acc:+right)
+        }
     }
   }
 
