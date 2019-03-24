@@ -8,7 +8,10 @@
       <div class="card offset-3 col-6">
         <div class="card-body">
           @form(action = helper.CSRF(routes.HomeController.sortList())) {
-            @inputText(listForm("listToSort"), '_label -> "Enter list:", 'size -> 65)
+            @inputText(listForm("listToSort"),
+                       '_label -> "Enter list:",
+                       'size -> 65,
+                       'placeHolder -> "5, 3, 6, 4")
 
             <input class="btn btn-dark" type="submit" value="Sort!">
           }
