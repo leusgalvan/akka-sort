@@ -1,9 +1,17 @@
 @(result: String)
 
 @main("Result") {
-    <h1>Result</h1>
-    <p>@{s"$result"}</p>
-    <form action="/">
-        <input type="submit" value="Go back" />
-    </form>
+    <div class="container">
+        <div class="row">
+            <div class="card offset-3 col-6">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">Result</h3>
+                    <p class="card-text mb-3">
+                        @result
+                    </p>
+                    <a href="/" class="btn btn-dark">Go back</a>
+                </div>
+            </div>
+        </div>
+    </div>
 }
