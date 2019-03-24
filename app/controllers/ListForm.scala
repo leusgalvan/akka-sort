@@ -8,7 +8,7 @@ object ListForm {
 
   case class Data(listToSort: List[Int])
 
-  def toIntList(s: String): List[Int] = input.split(",").toList.filter(_.nonEmpty).map(_.toInt)
+  def toIntList(s: String): List[Int] = s.split(",").toList.filter(_.nonEmpty).map(_.toInt)
 
   val form = Form(
     mapping(
