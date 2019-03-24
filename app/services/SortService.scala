@@ -23,7 +23,7 @@ class SortServiceImpl @Inject() (system: ActorSystem) extends SortService {
 
   def sort(listToSort: List[Int]): Future[List[Int]] = {
     val sortActor = system.actorOf(props, "sort-actor")
-    val eventualResult = sortActor ? SortList(listToSort)
-    eventualResult.mapTo[ListSorted].map(_.sortedList)
+    val eventualResult = (sortActor ? SortList(listToSort)).mapTo[ListSorted]
+    eventualResult.map(_.sortedList)
   }
 }

@@ -7,21 +7,9 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.12.6"
 
-wartremoverErrors in (Compile, compile) ++= Warts.allBut(
-  Wart.Any,
-  Wart.DefaultArguments,
-  Wart.OptionPartial,
-  Wart.PublicInference,
-  Wart.FinalCaseClass,
-  Wart.NonUnitStatements,
-  Wart.AsInstanceOf,
-  Wart.Nothing,
-  Wart.Overloading,
-  Wart.Product,
-  Wart.Serializable,
-  Wart.Var,
-  Wart.ImplicitParameter
-)
+addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.4.1")
+wartremoverErrors ++= Warts.allBut(Wart.ImplicitParameter)
+wartremoverExcluded ++= routes.in(Compile).value
 
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test

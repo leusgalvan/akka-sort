@@ -20,7 +20,7 @@ class SortActor extends Actor {
   import SortActor._
 
   @tailrec
-  private def merge(ls: List[Int], rs: List[Int], acc: List[Int] = List()): List[Int] = {
+  private def merge(ls: List[Int], rs: List[Int], acc: List[Int]): List[Int] = {
     (ls, rs) match {
       case(Nil, _) => acc ++ rs
       case(_, Nil) => acc ++ ls
@@ -43,12 +43,13 @@ class SortActor extends Actor {
         val eventualSortedList = for {
           sortedFirstHalf <- (firstActor ? SortList(firstHalf)).mapTo[ListSorted]
           sortedSecondHalf <- (secondActor ? SortList(secondHalf)).mapTo[ListSorted]
-        } yield merge(sortedFirstHalf.sortedList, sortedSecondHalf.sortedList)
+        } yield merge(sortedFirstHalf.sortedList, sortedSecondHalf.sortedList, Nil)
 
         Await.result(eventualSortedList, timeout.duration)
     }
   }
 
+  @SuppressWarnings(Array("org.wartremover.warts.Any"))
   override def receive: Receive = {
     case SortList(listToSort) =>
       val sortedList = sort(listToSort)

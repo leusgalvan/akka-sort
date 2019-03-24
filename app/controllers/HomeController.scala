@@ -12,15 +12,14 @@ import scala.util.{Failure, Success}
 
 @Singleton
 class HomeController @Inject()(sortService: SortService, cc: ControllerComponents) extends AbstractController(cc) with play.api.i18n.I18nSupport {
-  val timeout: Duration = 10 seconds
-
-  def index() = Action { implicit request =>
+  def index(): Action[AnyContent] = Action { implicit request =>
     Ok(views.html.index(ListForm.form))
   }
 
-  def sortList() = Action { implicit request: Request[AnyContent] =>
-    val listToSort = ListForm.form.bindFromRequest.value.get.listToSort
-    val eventualSortedList: Future[List[Int]] = sortService.sort(listToSort)
-    Ok(Await.result(eventualSortedList, timeout).mkString(", "))
+  def sortList(): Action[AnyContent] = Action.async { implicit request =>
+    ListForm.form.bindFromRequest.fold(
+      formWithErrors => Future.successful(BadRequest(views.html.index(formWithErrors))),
+      data => sortService.sort(data.listToSort).map(s => Ok(s.mkString(", ")))
+    )
   }
 }
