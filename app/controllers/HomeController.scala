@@ -19,7 +19,7 @@ class HomeController @Inject()(sortService: SortService, cc: ControllerComponent
   def sortList(): Action[AnyContent] = Action.async { implicit request =>
     ListForm.form.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(views.html.index(formWithErrors))),
-      data => sortService.sort(data.listToSort).map(s => Ok(s.mkString(", ")))
+      data => sortService.sort(data.listToSort).map(s => Ok(views.html.result(s.mkString(", "))))
     )
   }
 }
